@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+	<title>Contact</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<style type="text/css">
+		.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+		.tg .tg-4eph{background-color:#f9f9f9}
+	</style>
+	<script type="text/javascript">
+	    /*<![CDATA[*/
+	   function onEdit(id, firstNname, lastName, age, emailId, gender, phoneNumber, relation, image) {
+		    document.getElementById('id').value = id; 
+	    	document.getElementById('firstName').value = firstName;
+	    	document.getElementById('lastName').value = lastName; 
+	    	document.getElementById('phoneNumber').value = phoneNumber;
+	    	document.getElementById('age').value = age;
+	    	document.getElementById('emailId').value = emailId; 
+	    	document.getElementById('gender').value = gender;
+	    	document.getElementById('relation').value = relation;
+	    	document.getElementById('image').value = image;
+	    }
+	    
+	    function reset() {
+	    	alert('resetting');
+	    	document.getElementById('firstName').value = firstName;
+	    	document.getElementById('lastName').value = lastName; 
+	    	document.getElementById('phoneNumber').value = phoneNumber;
+	    	document.getElementById('age').value = age;
+	    	document.getElementById('emailId').value = emailId; 
+	    	document.getElementById('gender').value = gender;
+	    	document.getElementById('relation').value = relation;
+	    	document.getElementById('image').value = image;
+	    	document.getElementById('id').value = "";
+	    }
+	    /*]]>*/
+	  </script>	
+</head>
+
+<body>
+<h2>
+	Add a Contact
+</h2>
+
+<form action="#" th:action="@{/add}" th:object="${contact}" method="post">
+    	<p>First Name: <input type="text" id="firstNname" th:field="*{firstName}" /></p>
+    	<p>Last Name: <input type="text" id="lastName" th:field="*{lastName}" /></p>
+        <p>Phone Number: <input type="text" id="phoneNumber" th:field="*{phoneNumber}" /></p>
+        <p>Email Id: <input type="text" id="emailId" th:field="*{emailId}" /></p>
+        <p>Gender: <input type="text" id="gender" th:field="*{gender}" /></p>
+        <p>Age: <input type="text" id="age" th:field="*{age}" /></p>
+        <p>Relation: <input type="text" id="relation" th:field="*{relation}" /></p>
+        <p>Image: <input type="text" id="image" th:field="*{image}" /></p>
+        <p><input type="hidden" id="id" th:field="*{id}" /></p>
+        <p><input type="submit" value="Submit" /> 
+        <input type="button" name="clear" value="Clear" onclick="javascript:reset();"/>
+        </p>
+</form>
+
+<br></br>
+
+<div th:if="${not #lists.isEmpty(contacts)}">
+<h3>Contacts List</h3>
+
+	<table class="tg">
+	<tr>
+		<th width="80">Id</th>
+		<th width="120">Contact First Name</th>
+		<th width="120">Contact Last Name</th>
+		<th width="120">Contact Phone Number</th>
+		<th width="120">Contact Gender</th>
+		<th width="120">Contact Email Id</th>
+		<th width="120">Contact Age</th>
+		<th width="120">Contact Relation</th>
+		<th width="120">Contact Image</th>
+		<th width="60">Edit</th>
+		<th width="60">Delete</th>
+	</tr>
+	<tr th:each="contact : ${#lists.sort(contacts)}">
+	        <td th:text="${contact.id}"></td>
+	        <td th:text="${contact.firstName}"></td>
+	        <td th:text="${contact.lastName}"></td>
+	        <td th:text="${contact.phoneNumber}"></td>
+	        <td th:text="${contact.gender}"></td>
+	        <td th:text="${contact.emailId}"></td>
+	        <td th:text="${contact.age}"></td>
+	        <td th:text="${contact.relation}"></td>
+	        <td th:text="${contact.image}"></td>
+	        <td th:text="${contact.emailId}"></td>
+			<td><a th:href ="'javascript:onEdit(\'' + ${contact.id} +'\',\''+ ${contact.name} + '\',\''+ ${contact.phone} + '\',\''+ ${contact.email} + '\');'">Edit</a></td>
+			<td><a th:href = "@{/delete(id=${contact.id})}" >Delete</a></td>	
+			       
+	</tr>	
+	</table>
+</div>
+
+
+	
+	
+	
+</body>
+</html>
